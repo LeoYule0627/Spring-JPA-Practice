@@ -4,7 +4,9 @@ import com.example.springrestfulpractice.controller.dto.request.CreateMealReques
 import com.example.springrestfulpractice.controller.dto.request.UpdateMealRequest;
 import com.example.springrestfulpractice.controller.dto.response.StatusResponse;
 import com.example.springrestfulpractice.model.MealRepository;
+import com.example.springrestfulpractice.model.OrderRepository;
 import com.example.springrestfulpractice.model.entity.Meal;
+import com.example.springrestfulpractice.model.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class MealService {
     @Autowired
     private MealRepository mealRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     public List<Meal> getAllMeals(){
         List<Meal> response = this.mealRepository.findAll();
@@ -64,6 +68,11 @@ public class MealService {
         Meal deleteMeal = this.mealRepository.findById(id);
         if(null == deleteMeal){
             return new StatusResponse("0002", "Not Found^^");
+        }
+        List<Order> orderList = this.orderRepository.findAll();
+        for(Order order:orderList){
+            if(order.getMealId()==id)
+            this.orderRepository.deleteById(order.getId());
         }
         Long count = this.mealRepository.deleteById(id);
         return new StatusResponse("0000", "successfully");

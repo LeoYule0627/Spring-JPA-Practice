@@ -5,6 +5,7 @@ import com.example.springrestfulpractice.controller.dto.request.UpdateOrderReque
 import com.example.springrestfulpractice.controller.dto.response.StatusResponse;
 import com.example.springrestfulpractice.model.entity.Order;
 import com.example.springrestfulpractice.service.OrderService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,11 +23,14 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping()
-    public List<Order> getAllOrders() {
-        List<Order> orderList = this.orderService.getAllOrders();
-        if (orderList.size() == 0)
+    public ResponseEntity<String> getAllOrders() {
+        String orderList = this.orderService.getAllOrders();
+        if (orderList == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found ^^");
-        return orderList;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(orderList);
     }
 
     @GetMapping("/{seq}")
@@ -34,8 +38,8 @@ public class OrderController {
         try {
             String order = this.orderService.getOrderBySeq(Integer.parseInt(seq));
             return ResponseEntity
-                    .status(HttpStatus.OK) // HTTP Status
-                    .contentType(MediaType.APPLICATION_JSON) // Content-Type(media type)
+                    .status(HttpStatus.OK)
+                    .contentType(MediaType.APPLICATION_JSON)
                     .body(order);
         } catch (Exception e) {
             System.out.println(e);

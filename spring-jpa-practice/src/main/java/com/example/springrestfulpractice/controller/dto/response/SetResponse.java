@@ -8,6 +8,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class SetResponse {
+    public static String setResponseAllOrders(List<Order> order, int totalPrice) {
+        JSONObject object = new JSONObject();
+        if (order != null) {
+            JSONArray list = new JSONArray();
+            Map mealMap = new HashMap();
+            Map orderMap = new HashMap();
+            orderMap.put("totalPrice", totalPrice);
+            for (Order orderList : order) {
+                mealMap.put("quantity", orderList.getQuantity());
+                mealMap.put("mealName", orderList.getMealName());
+                mealMap.put("mealPrice",orderList.getMealPrice());
+                orderMap.put("waiter", orderList.getWaiter());
+                orderMap.put("seq", orderList.getSeq());
+                list.put(mealMap);
+            }
+            object.put("Order",orderMap);
+            object.put("mealList", list);
+        }
+        return object.toString();
+    }
     public static String setResponseBySeq(String returnCode, String returnMsg, List<Order> order, int totalPrice) {
         JSONObject object = new JSONObject();
         object.put("returnCode", returnCode);

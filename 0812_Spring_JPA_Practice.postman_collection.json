@@ -54,7 +54,7 @@
 							"variable": [
 								{
 									"key": "seq",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -130,7 +130,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/order/:id",
+							"raw": "http://localhost:8080/order/:seq",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -138,12 +138,12 @@
 							"port": "8080",
 							"path": [
 								"order",
-								":id"
+								":seq"
 							],
 							"variable": [
 								{
-									"key": "id",
-									"value": "6"
+									"key": "seq",
+									"value": "2"
 								}
 							]
 						}
@@ -289,7 +289,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "2"
 								}
 							]
 						}
